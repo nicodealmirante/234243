@@ -7,4 +7,5 @@ tmp/*
 !tmp/.gitkeep
 node_modules1/
 pnpm-lock.yaml
+/public
 
