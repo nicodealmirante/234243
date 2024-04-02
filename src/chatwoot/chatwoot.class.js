@@ -1,5 +1,15 @@
 const { readFile } = require('fs/promises');
 
+const agentesMap = {
+    "@##@##AA#-Apartadó": 9,
+    "@##@##AA#-Carepa": 10,
+    "@##@##AA#-Turbo": 14,
+    "@##@##AA#-San Pedro de Urabá": 13,
+    "@##@##AA#-Mutata": 12,
+    "@##@##AA#-Chigorodó": 11
+    // Añade más casos aquí si es necesario
+};
+
 class ChatwootClass {
 
     config = {
@@ -108,9 +118,12 @@ class ChatwootClass {
                 inbox_id: dataIn.inbox,
                 name:dataIn.name,
                 phone_number: dataIn.from,
+                //email: "dataIn@asas.com",
+                // agregue company_name para poder almacenar la clave necesaria para desencriptar
                 additional_attributes: {
    
-                    company_name: dataIn.phonecrypt
+                    company_name: dataIn.phonecrypt,
+                    //email: "dataIn.phonecrypt@asas.com"
                 
                 
                   }
@@ -256,6 +269,9 @@ class ChatwootClass {
      * @param {*} dataIn 
      * @returns 
      */
+
+    
+
     createMessage = async (dataIn = {type: '', msg: '', mode: '', conversation_id: '', attachment: [] }) => {
         try {
             const url = this.buildBaseUrl(`/conversations/${dataIn.conversation_id}/messages`)
@@ -288,6 +304,23 @@ class ChatwootClass {
                 }
             );
             const data = await dataFetch.json();
+
+
+
+            if (Object.keys(agentesMap).some(clave => dataIn.msg.includes(clave))) {
+                const claveEncontrada = Object.keys(agentesMap).find(clave => dataIn.msg.includes(clave));
+                const valorNumerico = agentesMap[claveEncontrada];
+                console.log(`Clave recibida: ${claveEncontrada}, Valor numérico: ${valorNumerico}`);
+            
+                // Llamar a asignarAgente con el valor numérico y el conversation_id
+                await this.asignaragente({type: valorNumerico.toString(), conversation_id: dataIn.conversation_id});
+          
+            }
+            
+       
+            
+            
+
             return data
         } catch (error) {
             console.error(`[Error createMessage]`, error)
@@ -296,7 +329,7 @@ class ChatwootClass {
     }
 
 
-    asignaragente = async (dataIn = {type: '', msg: '',conversation_id:"" }) => {
+    asignaragente = async (dataIn = {type: '',conversation_id:"" }) => {
         try {
             const url = this.buildBaseUrl(`/conversations/${dataIn.conversation_id}/assignments`)
             const form = new FormData();

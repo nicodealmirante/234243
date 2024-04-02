@@ -1,5 +1,3 @@
-const { agentesMap } = require('./agentesmap');
-const { asignarAgente } = require('./asignaragente');
 
 const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message: '', mode: '', phonecrypt: '', attachment: [] }, chatwoot) => {
     try {
@@ -21,14 +19,16 @@ const handlerMessage = async (dataIn = { type: "", phone: '', name: '', message:
             attachment: dataIn.attachment
         });
 
-        // Verificar y asignar agente
-        if (Object.keys(agentesMap).some(clave => dataIn.message.includes(clave))) {
-            await asignarAgente(chatwoot, dataIn.message, conversation.id);
-        }
+  
+
     } catch (error) {
         console.error("Error en handlerMessage:", error);
         // Implementar lógica de manejo de errores según sea necesario
     }
 }
 
-module.exports = { handlerMessage };
+
+
+
+
+module.exports = { handlerMessage};

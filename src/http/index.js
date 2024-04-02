@@ -8,53 +8,85 @@ const {createReadStream} = require('fs')
  * con un endpoint o rutas de express para tener un punto de entrada
  * externo y flexible
  */
-
 class ServerHttp {
     app;
     port;
 
-    constructor(_port = 3003){
+    constructor(_port = 4000){
         this.port = _port
     }
- chatwootCtrl = async (req, res) => {
-    const crypto = require('crypto');    
-    const body = req.body;
+
+    /**
+     * este es el controlador para mostar el qr code
+     * @param {*} _ 
+     * @param {*} res 
+     */
+    // qrCtrl = (_, res) => {
+    //     const pathQrImage = join(process.cwd(), `bot.qr.png`);
+    //     const fileStream = createReadStream(pathQrImage);
+    //     res.writeHead(200, { "Content-Type": "image/png" });
+    //     fileStream.pipe(res);
+    // }
+
+    /**
+     * Este el controlador del los enventos del Chatwoot
+     * @param {*} req 
+     * @param {*} res 
+     */
+    chatwootCtrl = async (req, res) => {
+       // console.log("req.body chatwootCtrl",req.body)
+        const body = req.body;
         const attachments = body?.attachments
         const bot = req.bot;
 
-        const numberPayload = body.conversation?.meta?.sender?.additional_attributes.company_name
-//console.log("bodyyyyyyy",req.body)
-        
+        const numberPayload = body.conversation.meta.sender.additional_attributes.company_name
+
+        const crypto = require('crypto');
 
         //const numberPayload = 573504607650;
         
         function generarClaveIV() {
           // Generar una clave y un IV fijos para cada número
-          const clave = crypto.createHash('sha256').update('clave_secreta').digest(); 
+          const clave = crypto.createHash('sha256').update('clave_secreta').digest(); // Puedes cambiar 'clave_secreta'
           const iv = Buffer.alloc(16, 0); // IV fijo
         
           return { clave, iv };
         }
         
-
+        // function encriptar(numero, clave, iv) {
+        //   // Convertir el número a una cadena para encriptar
+        //   const numeroStr = numero.toString();
+        
+        //   // Crear un objeto de cifrado con AES
+        //   const cifrador = crypto.createCipheriv('aes-256-cbc', clave, iv);
+        
+        //   // Encriptar el número
+        //   let numeroEncriptado = cifrador.update(numeroStr, 'utf-8', 'hex');
+        //   numeroEncriptado += cifrador.final('hex');
+        
+        //   // Devolver el resultado en un formato que cumple con E.164
+        //   return numeroEncriptado;
+        // }
         
         function desencriptar(numeroEncriptado, clave, iv) {
-         
+          // Crear un objeto de descifrado con AES
           const descifrador = crypto.createDecipheriv('aes-256-cbc', clave, iv);
         
-       
+          // Descifrar el número
           let numeroDesencriptado = descifrador.update(numeroEncriptado, 'hex', 'utf-8');
           numeroDesencriptado += descifrador.final('utf-8');
         
           return numeroDesencriptado;
         }
         
-       
+        // Generar clave y IV fijos para el número
         const { clave, iv } = generarClaveIV();
         
- 
+        // Encriptar el número y mostrar el resultado
+        // const numeroEncriptado = encriptar(numberPayload, clave, iv);
+        // console.log('Número Encriptado:', numeroEncriptado);
         
-      
+        // Desencriptar el número encriptado y mostrar el resultado
         const numeroDesencriptado = desencriptar(numberPayload, clave, iv);
         console.log('Número Desencriptado1212:', numeroDesencriptado);
         
@@ -77,6 +109,14 @@ class ServerHttp {
             if (body?.event === 'conversation_updated' && mapperAttributes.includes('assignee_id')) {
                 const phone = body?.meta?.sender?.phone_number.replace('+', '')
                 const idAssigned = body?.changed_attributes[0]?.assignee_id?.current_value ?? null
+
+               
+
+
+                
+            
+
+
         
                 if(idAssigned){
                     bot.dynamicBlacklist.add(numeroDesencriptado)
@@ -95,6 +135,8 @@ class ServerHttp {
                 const phone = body.conversation?.meta?.sender?.phone_number.replace('+', '')
                 const content = body?.content ?? '';
 
+   
+
                 const file = attachments?.length ? attachments[0] : null;
                 if (file) {
                     console.log(`Este es el archivo adjunto...`, file.data_url)
@@ -102,7 +144,6 @@ class ServerHttp {
                         `${numeroDesencriptado}`,
                         content,
                         file.data_url,
-                       
                     );
                     res.send('ok')
                     return
@@ -133,7 +174,6 @@ class ServerHttp {
         }
     }
 
-
     /**
      * Incia tu server http sera encargador de injectar el instanciamiento del bot
      */
@@ -152,7 +192,7 @@ class ServerHttp {
         })
 
         this.app.post(`/chatwoot`, this.chatwootCtrl)
-
+       // this.app.get('/scan-qr',this.qrCtrl)
 
         this.app.listen(this.port, () => {
             console.log(``)
