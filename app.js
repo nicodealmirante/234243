@@ -298,7 +298,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
          '\n*Equipo listo para trabajar*.',
         'El valor del equipo es de 1700 U$S.' ,
         '▶ REQUERIDO:Necesita contar con un Apple Iphone 13 o suoperior (dispositivo de grabacion)',
-  'y un TV LED de 32 o mas (monitoreo)']) *//
+  'y un TV LED de 32 o mas (monitoreo)']) */
 
   .addAnswer('Selfie Mirror', {media: 'video3.mp4'})
   
