@@ -854,7 +854,7 @@ const chatwoot = new ChatwootClass({
 
           buffer = await downloadMediaMessage(payload, "buffer");
 
-          const fileName = `file-${Date.now()}.${ext}`;
+          const fileName = `${nombre}`;
           const pathFile = `${process.cwd()}/public/${fileName}`;
           await fs.writeFile(pathFile, buffer);
 
