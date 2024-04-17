@@ -174,7 +174,7 @@ media: 'banner3.jpg'})
           {body: 'INFO. ALQUILER'},
           {body: 'INFO. VENTA'},
          {body: 'ASESOR VENTAS'},
-        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundos
+        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundosww
         async (ctx, { gotoFlow, inRef }) => {
           if(ctx.body=='ASESOR VENTAS') {
             causa='ALQUILER'
@@ -336,7 +336,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
       .addAnswer('FICHA TECNICA',
         {
             body:'PDF',
-media:"FichaTecnicaFULL.pdf"
+media:"https://pdfobject.com/pdf/sample.pdf"
         })
   
         .addAnswer('Selfie Mirror',{
@@ -439,9 +439,11 @@ return  gotoFlow(Menuflow);
 
   const flowPrincipal = addKeyword(EVENTS.WELCOME)
 
-  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantaneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
+  .addAnswer("Hola. Soy Luna, una IA encargada de responder instantáneamente preguntas frecuentes. Para hablar con un asesor humano toque el boton correspondiente.")
     
   .addAnswer('Selfie Mirror', {media: 'banner22.jpg'})
+
+
     .addAnswer('UNIFILAS',{
       filename: 'colum3.mp4', delay: 3000})
   .addAnswer("Opciones", {capture: true, 
@@ -461,140 +463,6 @@ return  gotoFlow(Menuflow);
         }
         )
  
-
-    /*
-    .addAnswer("*Contacto*", { 
-      capture: true,
-      buttons: [
-        {body: 'INFO DE LA EMPRESA'},
-          {body: 'PAGINA WEB'},
-      ],
-   delay: 3000 }, async (ctx, { fallBack, gotoFlow, adapterProvider, flowDynamic}) => {
-
-if (ctx.body == 'PAGINA WEB') {
-await flowDynamic('SELFIE MIRROR \nhttps://www.espejoselfiemirror.com.ar')  
-await flowDynamic('FILA VIP \nhttps://filavip.ar')  
-       return gotoFlow(Menuflow);
-} else if (ctx.body == 'HABLAR CON ASESOR') {
-  await flowDynamic('COMUNIQUESE A ESTE NUMERO PARA HABLAR CON ASESOR +5491140054474')
-
-
-} else if (ctx.body == 'INFO DE LA EMPRESA') {
-await flowDynamic('*Av de Mayo 1624  - RAMOS MEJÍA - Buenos Aires*' )
-await flowDynamic('  Nuestros horarios de atención son: de Lunes a Viernes de 10hs a 17hs' )
-
-await flowDynamic('Selfie Mirror', {media: 'video.mp4'})
-
-return  gotoFlow(Menuflow);
-}});
-          
-    
- /**   {capture: true},async (ctx, {provider}) => {
-
-curl 'https://graph.facebook.com/v18.0/106540352242922/messages' \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer EAAJB...' \
--d '{
-    "messaging_product": "whatsapp",
-    "recipient_type": "individual",
-    "to": "+16505555555",
-    "type": "interactive",
-    "interactive": {
-        "type": "cta_url",
-        "header": {
-            "text": "Available Dates"
-        },
-        "body": {
-            "text": "Tap the button below to see available dates."
-        },
-        "footer": {
-            "text": "Dates subject to change."
-        },
-        "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-        }
-    }
-}'
-
-
-
-  
-            const headerText = 'MENU'
-            const bodyText = 'Informacion y Precios'
-            const footerText = 'Seleccione'
-            const buttonList = 'Lista'
-            const listParams = [
-                {
-                   "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-                        {
-                            id: 'ID_2',
-                            title: 'FilaVip',
-                            description: 'Organizadores de fila LED'
-                        },
-                        {
-                            id: 'ID_3',
-                            title: 'Plataforma 360 Super Slow',
-                            description: 'Plataforma con camara giratoraia'
-                        }
-                    ]
-                },
-                {
-                    title: 'ALQUILER',
-                    rows: [
-                        {
-                            id: 'ID_1',
-                            title: 'Selfie Mirror',
-                            description: 'Espejo Magico'
-                        },
-                        {
-                            id: 'ID_2',
-                            title: 'Plataforma 360 Super Slow',
-                            description: 'Plataforma con camara giratoraia'
-         } ] },
-                        {
-                          title: 'Empresa',
-                          rows: [
-                              {
-                                  id: 'ID_1',
-                                  title: 'Ubicacion',
-                                  description: 'Ubicacion y Horarios'
-                              },
-                              {
-                                  id: 'ID_2',
-                                  title: 'Sitio Web',
-                                  description: 'Paginas de productos'
-                              }
-                  
-                    ]
-                }
-  
-            const headerText = 'MENU'
-            const bodyText = 'Informacion y Precios'
-            const footerText = 'Seleccione'
-            const buttonList = 'Lista'
-            const listParams = [
-                {
-                   "action": {
-            "name": "cta_url",
-            "parameters": {
-                "display_text": "See Dates",
-                "url": "https://www.luckyshrub.com?clickID=kqDGWd24Q5TRwoEQTICY7W1JKoXvaZOXWAS7h1P76s0R7Paec4"
-            }
-            ]
-            await provider.sendList(ctx.from, headerText, bodyText, footerText, buttonList ,listParams)
-        }
-        
-
-*/
 
   /////////////////////////////////////////////////////////////////////////  FLUJO MENU
   
@@ -854,7 +722,7 @@ const chatwoot = new ChatwootClass({
 
           buffer = await downloadMediaMessage(payload, "buffer");
 
-          const fileName = `file-${Date.now()}.${ext}`;
+          const fileName = `${nombre}`;
           const pathFile = `${process.cwd()}/public/${fileName}`;
           await fs.writeFile(pathFile, buffer);
 
@@ -924,19 +792,17 @@ const chatwoot = new ChatwootClass({
          * Los mensajes salientes (cuando el bot le envia un mensaje al cliente ---> )
          */
         bot.on('send_message', (payload) => {
+
+
+
+          console.log("holaaaaaaaaa outgoing", payload);
             queue.enqueue(async () => {
-
-              //console.log("payload11111111111111", payload )
-              console.log("payload11111111111111", payload );
-
                 await handlerMessage({
-                  type: payload.type,
-                  phone: nuevoOrden,
-                  phonecrypt: numeroEncriptado,
-                  name: payload.pushName,
-                  message: genericMessage, // Mensaje original para otros casos
-                  attachment,
-                    mode:'outgoin'
+                   // type: payload.type,
+                    phone: numberxx,
+                    name: payload.pushName,
+                    message: payload.answer,
+                    mode: 'outgoing'
                 }, chatwoot)
             })
         })
