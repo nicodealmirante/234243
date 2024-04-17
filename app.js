@@ -936,7 +936,7 @@ const chatwoot = new ChatwootClass({
                   name: payload.pushName,
                   message: genericMessage, // Mensaje original para otros casos
                   attachment,
-                    mode:'outgoing'
+                    mode:'outgoin'
                 }, chatwoot)
             })
         })
