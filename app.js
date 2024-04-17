@@ -336,7 +336,7 @@ const organizadorflow = addKeyword('UNIFILA LED',{sensitive:true})
       .addAnswer('FICHA TECNICA',
         {
             body:'PDF',
-media:"https://pdfobject.com/pdf/sample.pdf"
+media:"https://espejoselfiemirror.com.ar/Ficha%20Tecnica.pdf"
         })
   
         .addAnswer('Selfie Mirror',{
