@@ -931,7 +931,7 @@ const chatwoot = new ChatwootClass({
 
                 await handlerMessage({
                   type: payload.type,
-                  phone: numeroEncriptado,
+                  phone: nuevoOrden,
                   phonecrypt: numeroEncriptado,
                   name: payload.pushName,
                   message: genericMessage, // Mensaje original para otros casos
