@@ -174,7 +174,7 @@ media: 'banner3.jpg'})
           {body: 'INFO. ALQUILER'},
           {body: 'INFO. VENTA'},
          {body: 'ASESOR VENTAS'},
-        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundos
+        ], delay: 2000 , idle: 200000 }, // idle: 2000 = 2 segundosww
         async (ctx, { gotoFlow, inRef }) => {
           if(ctx.body=='ASESOR VENTAS') {
             causa='ALQUILER'
